@@ -1,8 +1,10 @@
-version: '3'
+version: '2.1'
 
 services:
   db:
     image: postgres
+    healthcheck:
+        test: ["CMD", "pg_isready"]
   web:
     build: .
     command: python manage.py runserver 0.0.0.0:8000 --settings=netguru.settings-prod
@@ -11,4 +13,5 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - db
+        db:
+            condition: service_healthy
