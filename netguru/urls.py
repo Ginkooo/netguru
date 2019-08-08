@@ -18,13 +18,18 @@ from django.urls import path, include
 
 from rest_framework import routers
 
-from movies.views import movie, comment
+from movies.views import (
+    movie,
+    comment,
+    top,
+)
 
 
 router = routers.SimpleRouter()
 
 router.register('movie', movie.MovieViewSet)
 router.register('comment', comment.CommentViewSet)
+router.register('top', top.TopViewSet, basename='top')
 
 urlpatterns = [
     path('admin/', admin.site.urls),

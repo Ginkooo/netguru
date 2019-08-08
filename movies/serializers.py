@@ -11,10 +11,12 @@ class MovieSerializer(serializers.ModelSerializer):
         model = models.Movie
         fields = '__all__'
 
-    details = serializers.JSONField(required=False)
+    details = serializers.JSONField(required=False, read_only=True)
+    year = serializers.IntegerField(required=False, read_only=True)
 
     def create(self, validated_data):
         details = omdb.OmdbApi().get(validated_data['title'])
+        validated_data['year'] = int(details['Year'])
         validated_data['details'] = details
         return super().create(validated_data)
 
