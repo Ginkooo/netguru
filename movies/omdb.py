@@ -1,4 +1,5 @@
 from django.conf import settings
+from rest_framework import exceptions
 
 import requests
 
@@ -16,4 +17,7 @@ class OmdbApi():
                 't': str(title),
             }
         )
-        return resp.json()
+        data = resp.json()
+        if not data.get('Response'):
+            raise exceptions.APIException('Sorry, there is no such film in OMDb database')
+        return data
