@@ -17,6 +17,7 @@ class MovieTests(TestCase):
         self.omdb_sample_data = {
             'Title': 'Harry Potter',
             'Year': '2001',
+            'Response': "True",
         }
 
         resp_mock = mock.MagicMock()
@@ -78,3 +79,26 @@ class MovieTests(TestCase):
         resp = self.client.get(self.list_url, {'ordering': 'title'})
 
         self.assertListEqual('a b'.split(), [m['title'] for m in resp.json()])
+
+    def test_cannot_add_unexisting_film(self):
+        omdb_sample_data = {
+            'Response': "False",
+        }
+
+        resp_mock = mock.MagicMock()
+
+        def json():
+            return omdb_sample_data
+
+        resp_mock.json = json
+        omdb_mock = mock.patch(
+            'requests.get',
+            return_value=resp_mock,
+        ).start()
+
+        resp = self.client.post(
+            self.list_url,
+            {'title': 'Unexisting film'},
+        )
+
+        self.assertEquals(500, resp.status_code)

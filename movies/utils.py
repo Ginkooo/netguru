@@ -4,3 +4,7 @@ def filter_movie_details(details, key, value):
 
     if value[0] in details[key]:
         return True
+
+
+def is_truthy(value):
+    return str(value).lower() in '1 true yes'.split()

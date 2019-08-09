@@ -3,6 +3,8 @@ from rest_framework import exceptions
 
 import requests
 
+from movies import utils
+
 
 class OmdbApi():
 
@@ -18,6 +20,6 @@ class OmdbApi():
             }
         )
         data = resp.json()
-        if not data.get('Response'):
+        if not utils.is_truthy(data.get('Response')):
             raise exceptions.APIException('Sorry, there is no such film in OMDb database')
         return data
