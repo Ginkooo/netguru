@@ -123,3 +123,28 @@ class MovieTests(TestCase):
         )
 
         self.assertEqual(400, resp.status_code)
+
+    def test_can_add_movie_with_unusual_year(self):
+        omdb_sample_data = {
+            'Response': "True",
+            'Title': 'Mickey Mouse',
+            'Year': '2013-',
+        }
+
+        resp_mock = mock.MagicMock()
+
+        def json():
+            return omdb_sample_data
+
+        resp_mock.json = json
+        omdb_mock = mock.patch(
+            'requests.get',
+            return_value=resp_mock,
+        ).start()
+
+        resp = self.client.post(
+            self.list_url,
+            {'title': 'Mickey Mouse'},
+        )
+
+        self.assertEquals(2013, resp.json()['year'])
