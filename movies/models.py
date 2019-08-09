@@ -11,8 +11,14 @@ class Movie(models.Model):
     details = models.TextField(default=set)
     year = models.IntegerField()
 
+    def __repr__(self):
+        return f'{self.title} from {self.year}'
+
 
 class Comment(models.Model):
     contents = models.TextField()
     movie = models.ForeignKey(Movie, on_delete=models.CASCADE)
     added_at = models.DateTimeField(auto_now_add=True)
+
+    def __repr__(self):
+        return f'Comment about {self.movie.title}'
