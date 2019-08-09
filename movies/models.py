@@ -11,7 +11,7 @@ class Movie(models.Model):
     details = models.TextField()
     year = models.IntegerField()
 
-    def __repr__(self):
+    def __str__(self):
         return f'{self.title} from {self.year}'
 
 
