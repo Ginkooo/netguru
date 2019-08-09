@@ -25,14 +25,10 @@ from movies.views import (
 )
 
 
-router = routers.SimpleRouter()
+router = routers.DefaultRouter()
 
 router.register('movie', movie.MovieViewSet)
 router.register('comment', comment.CommentViewSet)
 router.register('top', top.TopViewSet, basename='top')
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('api-auth/', include('rest_framework.urls')),
-    *router.urls,
-]
+urlpatterns = router.urls
