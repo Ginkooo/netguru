@@ -5,6 +5,7 @@ WORKDIR /code
 COPY requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY . /code/
+run python manage.py test --settings=netguru.settings-tests
 RUN python manage.py collectstatic --noinput
 RUN python manage.py migrate
 CMD gunicorn --bind 0.0.0.0:$PORT netguru.wsgi

@@ -1,3 +1,4 @@
+pytest
 gunicorn==19.9.0
 Django==2.2.4
 django-filter==2.2.0
