@@ -29,7 +29,7 @@ router = routers.SimpleRouter()
 
 router.register('movie', movie.MovieViewSet)
 router.register('comment', comment.CommentViewSet)
-router.register('toplist', top.TopViewSet, basename='top')
+router.register('top', top.TopViewSet, basename='top')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
