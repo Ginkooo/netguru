@@ -8,7 +8,7 @@ from movies import utils
 
 class Movie(models.Model):
     title = models.CharField(max_length=255)
-    details = models.TextField(default=set)
+    details = models.TextField()
     year = models.IntegerField()
 
     def __repr__(self):

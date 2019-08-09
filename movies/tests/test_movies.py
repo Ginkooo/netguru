@@ -43,6 +43,7 @@ class MovieTests(TestCase):
 
         self.assertEqual(201, resp.status_code)
         self.assertEqual(expected_title, resp.json()['title'])
+        self.assertEqual(2001, resp.json()['year'])
 
         resp = self.client.post(
             self.list_url,
@@ -102,3 +103,23 @@ class MovieTests(TestCase):
         )
 
         self.assertEquals(500, resp.status_code)
+
+    def test_can_add_movie_and_request_it_after(self):
+        expected_title = 'Harry Potter'
+        movie = self.client.post(
+            self.list_url,
+            {'title': expected_title},
+        )
+
+        resp = self.client.get(self.list_url, {'title': expected_title})
+
+        self.assertEqual(200, resp.status_code)
+        self.assertEqual(expected_title, resp.json()[0]['title'])
+        self.assertEqual(2001, resp.json()[0]['year'])
+
+        resp = self.client.post(
+            self.list_url,
+            {},
+        )
+
+        self.assertEqual(400, resp.status_code)
